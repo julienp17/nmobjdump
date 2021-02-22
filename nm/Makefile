@@ -8,16 +8,17 @@
 CC			=	gcc
 
 MAIN		=	$(addprefix $(SRC_D), main.c)
+OBJ_M		=	$(MAIN:.c=.o)
 
 SRC			=	$(addprefix $(SRC_D), $(SRC_F))
-OBJ			=	$(MAIN:.c=.o) $(SRC:.c=.o)
+OBJ			=	$(SRC:.c=.o)
 SRC_D		=	src/
-SRC_F		=
+SRC_F		=	nm.c
 
 UT_SRC		=	$(addprefix $(UT_SRC_D), $(UT_SRC_F))
 UT_OBJ		=	$(UT_SRC:.c=.o)
 UT_SRC_D	=	tests/
-UT_SRC_F	=
+UT_SRC_F	=	test_nm.c
 
 CFLAGS		=	-W -Wall -Wextra -Werror $(INC) $(LDFLAGS)
 
@@ -38,18 +39,18 @@ RM			=	rm -f
 all: $(BIN)
 
 .PHONY: all
-$(BIN): $(OBJ)
-	$(CC) $(CFLAGS) -o $(BIN) $(OBJ)
+$(BIN): $(OBJ_M) $(OBJ)
+	$(CC) $(CFLAGS) -o $(BIN) $(OBJ_M) $(OBJ)
 	cp $(BIN) ..
 
 .PHONY: debug
-debug: $(OBJ)
-	$(CC) $(CFLAGS) $(DBFLAGS) -o $(BIN) $(OBJ)
+debug: $(OBJ_M) $(OBJ)
+	$(CC) $(CFLAGS) $(DBFLAGS) -o $(BIN) $(OBJ_M) $(OBJ)
 
 .PHONY: tests_run
-tests_run: clean $(OBJ) $(OBJ_UT)
-	$(CC) $(CFLAGS) $(LDFLAGS_UT) -o $(BIN_UT) $(OBJ) $(OBJ_UT)
-	./$(BIN_UT)
+tests_run: clean $(OBJ) $(UT_OBJ)
+	$(CC) $(CFLAGS) $(LDFLAGS_UT) -o $(UT_BIN) $(OBJ) $(UT_OBJ)
+	./$(UT_BIN)
 
 .PHONY: coverage
 coverage:
@@ -59,6 +60,7 @@ coverage:
 .PHONY: clean
 clean:
 	$(RM) $(OBJ)
+	$(RM) $(OBJ_M)
 	$(RM) $(OBJ_UT)
 	$(RM) *.o
 	$(RM) *.gc*
