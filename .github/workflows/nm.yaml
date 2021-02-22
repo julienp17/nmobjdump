@@ -64,7 +64,7 @@ jobs:
       run: ./nm/tests/functional/functional_tests.sh
 
   memory:
-    name: Valgrind
+    name: Memory
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker
 
