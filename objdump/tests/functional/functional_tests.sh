@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WD=./tests/functional
-BIN=objdump
+BIN=objdump -fs
 MY_BIN=./my_objdump
 
 passed=0
