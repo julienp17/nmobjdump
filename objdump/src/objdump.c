@@ -32,7 +32,7 @@ int objdump_file(const char *filename)
     if (!is_elf_file(fd))
         return MY_EXIT_FAILURE;
     printf("\n%s:\tfile format elf64-x86-64", filename);
-    exit_code = objdump(fd);
+    exit_code = objdump_fd(fd);
     if (close(fd) == -1) {
         perror("close: ");
         return MY_EXIT_FAILURE;
@@ -79,7 +79,7 @@ void print_help(void)
 
 bool is_elf_file(int fd)
 {
-    char const buf[SELFMAG] = "";
+    char buf[SELFMAG] = "";
     ssize_t bytes = read(fd, buf, SELFMAG);
 
     return (bytes == 4 && strcmp(buf, ELFMAG));
