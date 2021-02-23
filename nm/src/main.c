@@ -1,13 +1,13 @@
 /*
 ** EPITECH PROJECT, 2021
-**
+** nm
 ** File description:
 ** Main
 */
 
+#include "my_nm.h"
+
 int main(int ac, char **av)
 {
-    (void)ac;
-    (void)av;
-    return 0;
+    return nm(ac, av);
 }

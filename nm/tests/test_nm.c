@@ -14,3 +14,9 @@ Test(nm, no_args_no_aout, .init = cr_redirect_stderr)
     cr_assert_eq(nm(1, NULL), EXIT_FAILURE);
     cr_assert_stderr_eq_str("nm: 'a.out': No such file\n");
 }
+
+Test(nm, invalid_format, .init = cr_redirect_stderr)
+{
+    cr_assert_eq(nm(1, NULL), EXIT_FAILURE);
+    cr_assert_stderr_eq_str("nm: 'a.out': No such file\n");
+}
