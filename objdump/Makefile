@@ -12,7 +12,10 @@ MAIN		=	$(addprefix $(SRC_D), main.c)
 SRC			=	$(addprefix $(SRC_D), $(SRC_F))
 OBJ			=	$(MAIN:.c=.o) $(SRC:.c=.o)
 SRC_D		=	src/
-SRC_F		=	objdump.c
+SRC_F		=	objdump.c \
+				extract.c \
+				flags.c \
+				dump.c
 
 UT_SRC		=	$(addprefix $(UT_SRC_D), $(UT_SRC_F))
 UT_OBJ		=	$(UT_SRC:.c=.o)

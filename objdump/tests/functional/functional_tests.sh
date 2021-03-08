@@ -28,23 +28,15 @@ function run_test {
     rm $MY_BIN.txt
     rm $BIN.txt
     nb_tests=$((nb_tests+1))
+    sleep 0.01
     return $status
 }
 
 run_test "no args"
-sleep 0.01
-
 run_test "executable" "$WD/main"
-sleep 0.01
-
 run_test "object" "$WD/main.o"
-sleep 0.01
-
 run_test "shared object" "$WD/shared.so"
-sleep 0.01
-
 run_test "archive" "$WD/main.a"
-sleep 0.01
 
 failed=$((nb_tests - passed))
 echo "ran $nb_tests tests, ${red}$failed failed${white}, ${green}$passed passed${white}"
