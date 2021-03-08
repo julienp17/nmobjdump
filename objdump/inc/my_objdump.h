@@ -16,6 +16,7 @@
 #include <stddef.h>
 #include <unistd.h>
 #include <errno.h>
+#include <ctype.h>
 #include <string.h>
 #include <stdbool.h>
 
