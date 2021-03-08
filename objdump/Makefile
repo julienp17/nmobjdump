@@ -54,6 +54,10 @@ tests_run: clean $(OBJ) $(OBJ_UT)
 	$(CC) $(CFLAGS) $(LDFLAGS_UT) -o $(BIN_UT) $(OBJ) $(OBJ_UT)
 	./$(BIN_UT)
 
+.PHONY: functional_tests
+functional_tests:
+	./tests/functional/functional_tests.sh
+
 .PHONY: coverage
 coverage:
 	gcovr -b --exclude-directories tests

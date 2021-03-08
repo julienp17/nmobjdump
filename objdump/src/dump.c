@@ -21,7 +21,8 @@ void dump(const elf_t *elf)
     dump_flags(flags);
     printf("start address 0x%016lx\n\n", elf->ehdr->e_entry);
     for (size_t i = 0; i < elf->ehdr->e_shnum; i++)
-        dump_section(elf, i);
+        if (should_print_section(&(elf->shdr[i])))
+            dump_section(elf, i);
 }
 
 static void dump_section(const elf_t *elf, size_t i)
@@ -30,8 +31,6 @@ static void dump_section(const elf_t *elf, size_t i)
     unsigned char *content =
         (unsigned char *)((char *)elf->ehdr + elf->shdr[i].sh_offset);
 
-    if (!should_print_section(&(elf->shdr[i])))
-        return;
     printf("Contents of section %s:", sec_name);
     for (size_t j = 0 ; j < elf->shdr[i].sh_size ; j++) {
         if (j % 16 == 0)

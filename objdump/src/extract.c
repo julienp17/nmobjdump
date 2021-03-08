@@ -26,7 +26,6 @@ elf_t *extract_elf(const char *filename)
         return NULL;
     }
     elf = fill_elf(fd, s.st_size, filename);
-    elf->filename = strdup(filename);
     if (close(fd) == -1)
         perror("close: ");
     return elf;
@@ -45,7 +44,6 @@ static elf_t *fill_elf(int fd, const size_t file_size, const char *filename)
         perror("mmap: ");
         return NULL;
     }
-    elf->size = file_size;
     elf->ehdr = (Elf64_Ehdr *)elf->data;
     if (!is_elf_file(elf->ehdr->e_ident)) {
         fprintf(stderr, "objdump: %s: file format not recognized\n", filename);
@@ -54,6 +52,7 @@ static elf_t *fill_elf(int fd, const size_t file_size, const char *filename)
     elf->shdr = (Elf64_Shdr *)((unsigned char *)elf->data + elf->ehdr->e_shoff);
     elf->strtable = (char *)elf->data
                     + elf->shdr[elf->ehdr->e_shstrndx].sh_offset;
+    elf->filename = strdup(filename);
     return elf;
 }
 

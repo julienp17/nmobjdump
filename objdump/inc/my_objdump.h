@@ -31,7 +31,6 @@
 
 typedef struct elf {
     char *filename;
-    size_t size;
     void *data;
     void *strtable;
     Elf64_Ehdr *ehdr;
