@@ -14,8 +14,8 @@ function run_test {
     descr=$1
     arg=$2
     echo "Running: '$descr' with arg: [`basename $arg 2> /dev/null`]"
-    $MY_BIN  $arg &> $MY_BIN.txt
-    $BIN     $arg &> $BIN.txt
+    $MY_BIN  $arg 2>&1 $MY_BIN.txt
+    $BIN     $arg 2>&1 $BIN.txt
     diff $MY_BIN.txt $BIN.txt &> /dev/null
     status=$?
     if [ $status -eq 0 ] ; then
