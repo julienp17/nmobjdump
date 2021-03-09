@@ -36,6 +36,7 @@ typedef struct elf {
     void *strtable;
     Elf64_Ehdr *ehdr;
     Elf64_Shdr *shdr;
+    uint32_t flags;
 } elf_t;
 
 elf_t *extract_elf(const char *filename);
