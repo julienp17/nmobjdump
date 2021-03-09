@@ -53,6 +53,7 @@ static elf_t *fill_elf(int fd, const size_t file_size, const char *filename)
     elf->strtable = (char *)elf->data
                     + elf->shdr[elf->ehdr->e_shstrndx].sh_offset;
     elf->filename = strdup(filename);
+    elf->flags = get_flags(elf);
     return elf;
 }
 
