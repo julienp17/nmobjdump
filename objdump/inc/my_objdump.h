@@ -29,6 +29,7 @@
 #define DYNAMIC                 ((unsigned int)(0b001000000))
 #define D_PAGED                 ((unsigned int)(0b100000000))
 
+typedef unsigned char uchar;
 typedef struct elf {
     char *filename;
     void *data;
