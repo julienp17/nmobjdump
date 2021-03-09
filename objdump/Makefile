@@ -8,9 +8,10 @@
 CC			=	gcc
 
 MAIN		=	$(addprefix $(SRC_D), main.c)
+OBJ_M		=	$(MAIN:.c=.o)
 
 SRC			=	$(addprefix $(SRC_D), $(SRC_F))
-OBJ			=	$(MAIN:.c=.o) $(SRC:.c=.o)
+OBJ			=	$(SRC:.c=.o)
 SRC_D		=	src/
 SRC_F		=	objdump.c \
 				extract.c \
@@ -41,18 +42,21 @@ RM			=	rm -f
 all: $(BIN)
 
 .PHONY: all
-$(BIN): $(OBJ)
-	$(CC) $(CFLAGS) -o $(BIN) $(OBJ)
+$(BIN): $(OBJ) $(OBJ_M)
+	$(CC) $(CFLAGS) -o $(BIN) $(OBJ_M) $(OBJ)
 	cp $(BIN) ..
 
 .PHONY: debug
 debug: $(OBJ)
-	$(CC) $(CFLAGS) $(DBFLAGS) -o $(BIN) $(OBJ)
+	$(CC) $(CFLAGS) $(DBFLAGS) -o $(BIN) $(OBJ_M) $(OBJ)
 
 .PHONY: tests_run
 tests_run: clean $(OBJ) $(OBJ_UT)
-	$(CC) $(CFLAGS) $(LDFLAGS_UT) -o $(BIN_UT) $(OBJ) $(OBJ_UT)
-	./$(BIN_UT)
+	$(CC) $(CFLAGS) $(LDFLAGS_UT) -o $(UT_BIN) $(OBJ) $(OBJ_UT)
+	./$(UT_BIN)
+
+coverage:
+	gcovr -s --exclude tests/
 
 .PHONY: functional_tests
 functional_tests:
