@@ -13,6 +13,9 @@ yellow=`tput setaf 3`
 white=`tput setaf 7`
 
 function run_test {
+    sleep 0.01
+    nb_tests=$((nb_tests+1))
+
     descr=$1
     arg=$2
     my_status=0
@@ -39,8 +42,6 @@ function run_test {
         echo "${red}> Failed !"
         diff --side-by-side --color --suppress-common-lines $MY_BIN.txt $BIN.txt
     fi
-    nb_tests=$((nb_tests+1))
-    sleep 0.01
     return $status
 }
 
