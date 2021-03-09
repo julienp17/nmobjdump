@@ -48,7 +48,8 @@ function run_test {
 run_test "no args"
 run_test "wrong file format"  $RD/test.txt
 run_test "executable"         $RD/main
-run_test "object"             $RD/main.o
+run_test "object main"        $RD/main.o
+run_test "object dump"        $RD/dump.o
 run_test "shared object"      $RD/libasm.so
 run_test "archive"            $RD/main.a
 # run_test "coredump"           $RD/core
