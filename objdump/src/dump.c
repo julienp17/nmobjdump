@@ -11,17 +11,14 @@ static void dump_section(const elf_t *elf, size_t i);
 static void print_ascii(const unsigned char *content, size_t j, size_t size);
 static bool should_print_section(const Elf64_Shdr *shdr,
                                 const char *sec_name,
-                                const uchar *content);
-static bool section_is_empty(const uchar *content, const size_t size);
+                                bool is_dynamic);
 
 void dump(const elf_t *elf)
 {
-    uint32_t flags = get_flags(elf);
-
     printf ("\n%s:     file format elf64-x86-64\n"
             "architecture: i386:x86-64, flags 0x%08x:\n",
-            elf->filename, flags);
-    dump_flags(flags);
+            elf->filename, elf->flags);
+    dump_flags(elf->flags);
     printf("start address 0x%016lx\n\n", elf->ehdr->e_entry);
     for (size_t i = 0; i < elf->ehdr->e_shnum; i++)
         dump_section(elf, i);
@@ -33,7 +30,7 @@ static void dump_section(const elf_t *elf, size_t i)
     char *sec_name = (char *)(elf->strtable + shdr->sh_name);
     uchar *content = (uchar *)((char *)elf->ehdr + shdr->sh_offset);
 
-    if (!should_print_section(shdr, sec_name, content))
+    if (!should_print_section(shdr, sec_name, elf->flags & DYNAMIC))
         return;
     printf("Contents of section %s:", sec_name);
     for (size_t j = 0 ; j < shdr->sh_size ; j++) {
@@ -70,10 +67,10 @@ static void print_ascii(const uchar *content, size_t j, size_t size)
 
 static bool should_print_section(const Elf64_Shdr *shdr,
                                 const char *sec_name,
-                                const uchar *content)
+                                bool is_dynamic)
 {
     if ((shdr->sh_type == SHT_RELA || shdr->sh_type == SHT_REL))
-        return !section_is_empty(content, shdr->sh_size);
+        return is_dynamic;
     return (
         shdr->sh_size > 0
         && shdr->sh_type != SHT_NOBITS
@@ -81,12 +78,4 @@ static bool should_print_section(const Elf64_Shdr *shdr,
         && strcmp(sec_name, ".strtab") != 0
         && strcmp(sec_name, ".shstrtab") != 0
     );
-}
-
-static bool section_is_empty(const uchar *content, const size_t size)
-{
-    for (size_t j = 0 ; j < size ; j++)
-        if (isprint(content[j]) && content[j] != ' ')
-            return false;
-    return true;
 }
