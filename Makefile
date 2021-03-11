@@ -5,31 +5,23 @@
 ## Makefile
 ##
 
-MAKE_NM			=	make -C ./nm
-MAKE_OBJDUMP	=	make -C ./objdump
+$@
 
-all:
-	$(MAKE_NM) all
-	$(MAKE_OBJDUMP) all
+RULES = objdump nm
 
-nm:
-	$(MAKE_NM) all
+all: $(RULES)
 
-objdump:
-	$(MAKE_OBJDUMP) all
+$(RULES):
+	make -C $@
 
-tests_run: clean
-	$(MAKE_NM) tests_run
-	cp ./nm/*.gc* .
-	$(MAKE_OBJDUMP) tests_run
-	cp ./objdump/*.gc* .
+fclean:
+	make -C objdump $@
+	make -C nm $@
+	rm -f my_nm
+	rm -f my_objdump
 
-clean:
-	$(MAKE_NM) clean
-	$(MAKE_OBJDUMP) clean
+all clean re:
+	make -C objdump $@
+	make -C nm $@
 
-fclean: clean
-	$(MAKE_NM) fclean
-	$(MAKE_OBJDUMP) fclean
-
-re: fclean all
+.PHONY: $(RULES)
