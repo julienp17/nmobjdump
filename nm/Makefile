@@ -13,12 +13,16 @@ OBJ_M		=	$(MAIN:.c=.o)
 SRC			=	$(addprefix $(SRC_D), $(SRC_F))
 OBJ			=	$(SRC:.c=.o)
 SRC_D		=	src/
-SRC_F		=	nm.c
+SRC_F		=	nm.c \
+				extract.c \
+				dump.c \
+				symbol_type.c \
+				sort.c
 
 UT_SRC		=	$(addprefix $(UT_SRC_D), $(UT_SRC_F))
 UT_OBJ		=	$(UT_SRC:.c=.o)
 UT_SRC_D	=	tests/
-UT_SRC_F	=	test_nm.c
+UT_SRC_F	=
 
 CFLAGS		=	-W -Wall -Wextra -Werror $(INC) $(LDFLAGS)
 
@@ -51,6 +55,10 @@ debug: $(OBJ_M) $(OBJ)
 tests_run: clean $(OBJ) $(UT_OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS_UT) -o $(UT_BIN) $(OBJ) $(UT_OBJ)
 	./$(UT_BIN)
+
+.PHONY: functional_tests
+functional_tests:
+	./tests/functional/functional_tests.sh
 
 .PHONY: coverage
 coverage:

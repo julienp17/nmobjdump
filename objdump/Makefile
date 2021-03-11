@@ -55,6 +55,7 @@ tests_run: clean $(OBJ) $(OBJ_UT)
 	$(CC) $(CFLAGS) $(LDFLAGS_UT) -o $(UT_BIN) $(OBJ) $(OBJ_UT)
 	./$(UT_BIN)
 
+.PHONY: coverage
 coverage:
 	gcovr -s --exclude tests/
 
