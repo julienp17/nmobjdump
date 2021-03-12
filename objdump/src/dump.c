@@ -11,7 +11,7 @@ static void dump_section(const elf_t *elf, size_t i);
 static void print_ascii(const unsigned char *content, size_t j, size_t size);
 static bool should_print_section(const Elf64_Shdr *shdr,
                                 const char *sec_name,
-                                bool is_dynamic);
+                                const Elf64_Half type);
 
 void dump(const elf_t *elf)
 {
@@ -30,7 +30,7 @@ static void dump_section(const elf_t *elf, size_t i)
     char *sec_name = (char *)(elf->strtable + shdr->sh_name);
     uchar *content = (uchar *)((char *)elf->ehdr + shdr->sh_offset);
 
-    if (!should_print_section(shdr, sec_name, elf->ehdr->e_type == ET_DYN))
+    if (!should_print_section(shdr, sec_name, elf->ehdr->e_type))
         return;
     printf("Contents of section %s:", sec_name);
     for (size_t j = 0 ; j < shdr->sh_size ; j++) {
@@ -67,10 +67,10 @@ static void print_ascii(const uchar *content, size_t j, size_t size)
 
 static bool should_print_section(const Elf64_Shdr *shdr,
                                 const char *sec_name,
-                                bool is_dynamic)
+                                const Elf64_Half type)
 {
-    if ((shdr->sh_type == SHT_RELA || shdr->sh_type == SHT_REL))
-        return is_dynamic;
+    if (shdr->sh_type == SHT_RELA || shdr->sh_type == SHT_REL)
+        return type == ET_EXEC || type == ET_DYN;
     return (
         shdr->sh_size > 0
         && shdr->sh_type != SHT_NOBITS
