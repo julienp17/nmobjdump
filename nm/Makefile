@@ -16,8 +16,10 @@ SRC_D		=	src/
 SRC_F		=	nm.c \
 				extract.c \
 				dump.c \
-				symbol_type.c \
-				sort.c
+				sort.c \
+				symbols/get_symbol_type.c \
+				symbols/symbol_type1.c \
+				symbols/symbol_type2.c \
 
 UT_SRC		=	$(addprefix $(UT_SRC_D), $(UT_SRC_F))
 UT_OBJ		=	$(UT_SRC:.c=.o)

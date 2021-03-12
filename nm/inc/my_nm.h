@@ -42,7 +42,19 @@ elf_t *extract_elf(const char *filename);
 
 int nm(const char *filename);
 bool dump(const elf_t *elf);
-char get_symbol_type(const Elf64_Shdr *shdr, const Elf64_Sym *sym);
 void sort_symbols(Elf64_Sym *symbols, const size_t size, const uchar *strTbl);
+
+
+char get_symbol_type(const Elf64_Shdr *shdr, const Elf64_Sym *sym);
+char get_absolute(const Elf64_Shdr *shdr, const Elf64_Sym *sym);
+char get_common(const Elf64_Shdr *shdr, const Elf64_Sym *sym);
+char get_undefined(const Elf64_Shdr *shdr, const Elf64_Sym *sym);
+char get_bss(const Elf64_Shdr *shdr, const Elf64_Sym *sym);
+char get_text(const Elf64_Shdr *shdr, const Elf64_Sym *sym);
+char get_data(const Elf64_Shdr *shdr, const Elf64_Sym *sym);
+char get_rodata(const Elf64_Shdr *shdr, const Elf64_Sym *sym);
+char get_init_array(const Elf64_Shdr *shdr, const Elf64_Sym *sym);
+char get_weak(const Elf64_Shdr *shdr, const Elf64_Sym *sym);
+
 
 #endif  // INC_MY_NM_H_
