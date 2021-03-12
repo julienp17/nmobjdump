@@ -30,7 +30,7 @@ static void dump_section(const elf_t *elf, size_t i)
     char *sec_name = (char *)(elf->strtable + shdr->sh_name);
     uchar *content = (uchar *)((char *)elf->ehdr + shdr->sh_offset);
 
-    if (!should_print_section(shdr, sec_name, elf->flags & DYNAMIC))
+    if (!should_print_section(shdr, sec_name, elf->ehdr->e_type == ET_DYN))
         return;
     printf("Contents of section %s:", sec_name);
     for (size_t j = 0 ; j < shdr->sh_size ; j++) {
