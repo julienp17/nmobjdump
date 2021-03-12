@@ -18,6 +18,8 @@ int main(int ac, char **av)
         tmp = objdump(av[i]);
         if (tmp != 0)
             status = tmp;
+        fflush(stdout);
+        fflush(stderr);
     }
     return status;
 }
