@@ -42,8 +42,8 @@ static void dump_section_symbols(const elf_t *elf, size_t i)
     free(symbols);
 }
 
-
-static bool should_dump_symbol(const Elf64_Sym *symbol) {
+static bool should_dump_symbol(const Elf64_Sym *symbol)
+{
     return (
         symbol->st_info != STT_FILE
         && symbol->st_name != 0
@@ -52,7 +52,8 @@ static bool should_dump_symbol(const Elf64_Sym *symbol) {
 
 static void dump_symbol(const Elf64_Shdr *shdr,
                         const Elf64_Sym *symbol,
-                        const uchar *strTbl) {
+                        const uchar *strTbl)
+{
     char type = get_symbol_type(shdr, symbol);
 
     if (symbol->st_value == 0 && type != 'T')

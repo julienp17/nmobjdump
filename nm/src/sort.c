@@ -9,7 +9,8 @@
 
 static int sym_cmp(const char *s1, const char *s2);
 
-void sort_symbols(Elf64_Sym *symbols, const size_t size, const uchar *strTbl) {
+void sort_symbols(Elf64_Sym *symbols, const size_t size, const uchar *strTbl)
+{
     Elf64_Sym tmp;
     char *name1 = NULL;
     char *name2 = NULL;
@@ -27,7 +28,8 @@ void sort_symbols(Elf64_Sym *symbols, const size_t size, const uchar *strTbl) {
     }
 }
 
-static int sym_cmp(const char *s1, const char *s2) {
+static int sym_cmp(const char *s1, const char *s2)
+{
     int ret = 0;
     bool fst_unclean = false;
     bool snd_unclean = false;

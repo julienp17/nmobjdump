@@ -7,7 +7,8 @@
 
 #include "my_nm.h"
 
-char get_symbol_type(const Elf64_Shdr *shdr, const Elf64_Sym *sym) {
+char get_symbol_type(const Elf64_Shdr *shdr, const Elf64_Sym *sym)
+{
     char type = 0;
     char (*type_getters[])(const Elf64_Shdr *, const Elf64_Sym *) = {
         &get_weak, &get_absolute, &get_common, &get_undefined, &get_bss,
