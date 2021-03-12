@@ -35,10 +35,8 @@ static elf_t *fill_elf(int fd, const size_t file_size, const char *filename)
 {
     elf_t *elf = malloc(sizeof(elf_t));
 
-    if (elf == NULL) {
-        perror("malloc: ");
+    if (elf == NULL)
         return NULL;
-    }
     elf->data = mmap(NULL, file_size, PROT_READ, MAP_PRIVATE, fd, 0);
     if (elf->data == MAP_FAILED) {
         perror("mmap: ");
