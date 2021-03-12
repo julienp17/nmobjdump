@@ -16,9 +16,3 @@ int objdump(const char *filename)
     dump(elf);
     return 0;
 }
-
-void print_help(void)
-{
-    printf("Usage: objdump <options(s)> <file(s)>\n"
-            " Display information from object <file(s)>.\n");
-}
